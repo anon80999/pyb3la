@@ -1,0 +1,17 @@
+.DS_Store
+notes.md
+.ipynb_checkpoints
+dev-code/*
+*/test-env/*
+*.err
+.vscode/
+__pycache__/
+build/
+*.egg-info
+*.bin
+*.fzz
+dist/
+.clang-format
+docs/_build/*
+docs/readme.rst
+deptree.txt
