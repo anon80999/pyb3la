@@ -12,7 +12,7 @@ https://anon80999.github.io/pyb3la/.
 pybela was developed with a machine learning use-case in mind. For a
 complete pipeline including data acquisition, processing, model
 training, and deployment (including rapid cross-compilation) check the
-`pybela-pytorch-xc-tutorial <ANONYMISED>`__.
+`pybela-pytorch-xc-tutorial <https://github.com/anon80999/pybela-pytorch-xc-tutorial>`__.
 
 Installation and set up
 -----------------------
@@ -104,10 +104,23 @@ For pybela to be able to communicate with your Bela device, you will
 need to add the watcher library to your Bela project. To do so, you will
 need to add the files ``Watcher.h`` and ``Watcher.cpp`` to your Bela
 project. You can do this by copying the files from the ``watcher``
-repository into your Bela project. To do so, you can run:
+repository into your Bela project.
+
+First you need to clone this repository, **don’t forget to add the
+``--recurse-submodules`` flag to the ``git`` command** to populate the
+``watcher/`` folder:
 
 .. code:: bash
 
+   # in laptop
+   git clone --recurse-submodules https://github.com/BelaPlatform/pybela.git
+
+Then you can copy the files to your Bela project:
+
+.. code:: bash
+
+   # in laptop
+   cd pybela/
    scp watcher/Watcher.h watcher/Watcher.cpp root@bela.local:Bela/projects/your-project/
 
 Getting started
@@ -128,15 +141,15 @@ pybela has three different modes of operation:
 -  **Controlling**: control the value of variables in the Bela code from
    python.
 
-You can check the **tutorials** at
-tutorials/``for more detailed information and usage of each of the modes. You can also check``\ test/test.py\`
-for a quick overview of the library.
+You can check the **tutorials** at ``tutorials/``\ for more detailed
+information and usage of each of the modes. You can also
+check\ ``test/test.py`` for a quick overview of the library.
 
-Running the examples
-~~~~~~~~~~~~~~~~~~~~
+Running the tutorials
+~~~~~~~~~~~~~~~~~~~~~
 
 The quickest way to get started is to start a jupyter notebook server
-and run the examples. If you haven’t done it yet, install the python
+and run the tutorials. If you haven’t done it yet, install the python
 package as explained in the Installation section. If you don’t have the
 ``jupyter notebook`` package installed, you can install it by running
 (replace ``pip`` with ``pipenv`` if you are using a pipenv environment):
@@ -165,7 +178,7 @@ Bela side
 ^^^^^^^^^
 
 For example, if you want to access the variable ``myvar`` from python,
-you need to define the variable in your Bela code as follows:
+you need to declare the variable in your Bela with the Watcher template:
 
 .. code:: cpp
 
@@ -201,9 +214,9 @@ you can see an example `here <./test/bela-test/render.cpp>`__.
 Python side
 ^^^^^^^^^^^
 
-Once the variable is defined “in the watcher”, you can stream, log and
-monitor its value from python. For example, to stream the value of
-``myvar`` from python, you can do:
+Once the variable is declared with the Watcher template, you can stream,
+log, monitor and control its value from python. For example, to stream
+the value of ``myvar`` from python, you can do:
 
 .. code:: python
 
@@ -217,6 +230,21 @@ to terminate the streaming, you can run:
 .. code:: python
 
    streamer.stop_streaming()
+
+Example projects
+----------------
+
+-  `pybela-drumsynth <https://github.com/anon80999/pyb3la-drumsynth>`__:
+   Audio-driven drum synthesis. This project takes audio from a
+   microphone to control a drum synthesiser using onset detection and
+   audio feature extraction. It uses pybela to capture an audio dataset
+   and runs a torch model on Bela.
+-  `faab-hyperparams <https://github.com/anon80999/hyp3rparams/>`__:
+   Project that explores sonification of latent spaces of a Transformer
+   Autoencoder model. This project uses pybela to capture training data,
+   and to stream data to the laptop which runs a pytorch model. The
+   output of the model can be sent back to Bela in real-time or sent
+   through OSC to another device.
 
 Testing
 -------
@@ -252,8 +280,8 @@ You can build pybela using pipenv:
 To do and known issues
 ----------------------
 
-**Long term**
-
+-  ☐ **Upgrade**: change dependency management from Pipenv to uv
+-  ☐ **Fix**: logger with automatic transfer too slow for large datasets
 -  ☐ **Add**: example projects
 -  ☐ **Issue:** Monitor and streamer/controller can’t be used
    simultaneously –  This is due to both monitor and streamer both using
