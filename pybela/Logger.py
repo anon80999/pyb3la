@@ -37,7 +37,7 @@ class Logger(Watcher):
 
         Args:
             variables (list of str, optional): List of variables to be logged. If no variables are passed, all variables in the watcher are logged. Defaults to [].
-            transfer (bool, optional): If True, the logged files will be transferred automatically during the logging session. Defaults to True.
+            transfer (bool, optional): If True, the logged files will be transferred automatically during the logging session. Defaults to False. #FIXME too slow
 
         Returns:
             list of str: List of local paths to the logged files.
